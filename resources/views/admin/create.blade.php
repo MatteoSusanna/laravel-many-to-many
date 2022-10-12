@@ -39,6 +39,16 @@
                 <div class="invalid-feedback">{{$message}}</div>
             @enderror
         </div>
+
+        <h4>Tag</h4>
+        <div class="d-flex">
+            @foreach ($tags as $tag)
+                <div class="form-group form-check mr-4">
+                    <input type="checkbox" class="form-check-input" id="tag_{{$tag->id}}" name="tags[]" value="{{$tag->id}}">
+                    <label class="form-check-label" for="tag_{{$tag->id}}"><strong>+ {{$tag->name}}</strong></label>
+                </div>
+            @endforeach
+        </div>
     
         <button type="submit" class="btn btn-primary">Crea</button>
         <a href="{{route('admin.posts.index')}}" class="btn btn-primary">Indietro</a>

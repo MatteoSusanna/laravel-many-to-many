@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
+use App\Tag;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -29,7 +30,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.create', compact('categories'));
+        $tags = Tag::all();
+        return view('admin.create', compact('categories', 'tags'));
     }
 
     /**
@@ -43,9 +45,11 @@ class PostController extends Controller
         $request->validate( [
                                 'name' => 'required|min:3|max:255',
                                 'content' => 'required|min:3|max:65000',
-                                'category_id' => 'nullable|exists:categories,id'
+                                'category_id' => 'nullable|exists:categories,id',
+                                'tags' => 'exists:tags,id',
                             ]
         );
+
 
         $dati = $request->all();
 
@@ -60,6 +64,13 @@ class PostController extends Controller
 
         $posts->save();
         
+        //se dentro $dati esiste la chiave tags allorafai la sync
+        //il browser se tag[] non contiene nulla non lo fa vedere
+        //ecco il perchè di questa condizione
+        if(array_key_exists('tags', $dati)){
+            $posts->tags()->sync($dati['tags']);
+        }
+
         return redirect()->route('admin.posts.index')->with('status', 'Post creato con succeso');
     }
 
