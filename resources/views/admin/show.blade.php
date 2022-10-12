@@ -9,6 +9,11 @@
             <div class="card-body">
               <h5 class="card-title">Slug: {{$post->slug}}</h5>
               <p class="card-text">Content: {{$post->content}}</p>
+
+              <strong>TAG:</strong>
+                @foreach ($post->tags as $tag)
+                    <strong> {{$tag->name}} -</strong>
+                @endforeach
             </div>
         </div>
         <a href="{{route('admin.posts.index')}}" class="btn btn-primary">Indietro</a>
