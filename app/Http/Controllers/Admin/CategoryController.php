@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Category;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -26,7 +27,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.categories.create');
     }
 
     /**
@@ -37,7 +38,28 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate( [
+                                'name' => 'required|min:3|max:255',
+                            ]
+        );
+
+        $dati = $request->all();
+
+        $category = new Category();
+        $category->fill($dati);
+
+        $slug = Str::slug($category->name . '-' . $category->id, '-'); 
+        $category->slug = $slug;
+
+        $category->save();
+
+        //creazione slug unique
+        $slug = Str::slug($category->name . '-' . $category->id, '-'); 
+        $category->slug = $slug;
+
+        $category->save();
+        
+        return redirect()->route('admin.categories.index')->with('status', 'Categoria creata con succeso');
     }
 
     /**
@@ -57,9 +79,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -69,9 +91,22 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $request->validate( [
+                                'name' => 'required|min:3|max:255',
+                            ]
+        );
+        $dati = $request->all();
+
+        //creazione slug unique
+        $slug = Str::slug($dati['name'] . '-' . $category['id'], '-'); 
+        $dati['slug'] = $slug;
+        
+        $category->update($dati);
+        $category->save();
+
+        return redirect()->route('admin.categories.edit', ['category', 'category'=> $category->id])->with('status', 'Post modificato con successo');
     }
 
     /**
@@ -80,8 +115,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->route('admin.categories.index');
     }
 }

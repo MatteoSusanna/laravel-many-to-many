@@ -14,24 +14,25 @@
     </div>
     <div class="container">
 
-        <table class="table table-dark table-striped">
-            <thead>
-                <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Slug</th>
-                </tr>
-            </thead>
-            <tbody>
-                    @foreach ($category->post as $post)
-                        <tr>
-                            <th scope="row">{{$post->id}}</th>
-                            <td>{{$post->name}}</td>
-                            <td>{{$post->slug}}</td>
-                        </tr>
-                    @endforeach
-            </tbody>
-
-        </table>
+        @if (count($category->post)) 
+            <table class="table table-dark table-striped my-3">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Slug</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        @foreach ($category->post as $post)
+                            <tr>
+                                <th scope="row">{{$post->id}}</th>
+                                <td>{{$post->name}}</td>
+                                <td>{{$post->slug}}</td>
+                            </tr>
+                        @endforeach
+                </tbody>
+            </table>
+        @endif
     </div>
 @endsection

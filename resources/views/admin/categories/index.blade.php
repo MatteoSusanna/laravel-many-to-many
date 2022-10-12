@@ -24,9 +24,9 @@
                             <td>{{$category->slug}}</td>
                             <td class="d-flex">
                                 <a href="{{route('admin.categories.show', ['category' => $category->id])}}" class="btn btn-primary">Vedi</a>
-                                <a {{--href="{{route('admin.posts.edit', ['post' => $post->id])}}"--}} class="btn btn-warning mx-2">Modifica</a>
+                                <a href="{{route('admin.categories.edit', ['category' => $category->id])}}" class="btn btn-warning mx-2">Modifica</a>
 
-                                <form {{--action="{{route('admin.posts.destroy', ['post' => $post->id])}}"--}} method="POST" onsubmit="return confirm('Vuoi cancellare definitivamente il post?');">
+                                <form action="{{route('admin.categories.destroy', ['category' => $category->id])}}" method="POST" onsubmit="return confirm('Vuoi cancellare definitivamente il post?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">CANCELLA</button>
