@@ -126,6 +126,8 @@ class PostController extends Controller
 
         if(array_key_exists('tags', $dati)){
             $post->tags()->sync($dati['tags']);
+        }else{
+            $post->tags()->sync([]);
         }
 
         return redirect()->route('admin.posts.edit', ['post', 'post'=> $post->id])->with('status', 'Post modificato con successo');
@@ -139,6 +141,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $post->tags()->sync([]);
         $post->delete();
         return redirect()->route('admin.posts.index')->with('status', 'Cancellazione avvenuta con succeso');
     }

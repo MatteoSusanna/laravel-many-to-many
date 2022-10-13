@@ -5,16 +5,16 @@
 @section('content')
     <div class="container">
         <div class="card text-bg-info mb-3" style="max-width: 18rem;">
-            <div class="card-header"><strong>Name: {{$category->name}}</strong></div>
+            <div class="card-header"><strong>Name: {{$tag->name}}</strong></div>
             <div class="card-body">
-              <h6 class="card-title">Slug: {{$category->slug}}</h6>
+              <h6 class="card-title">Slug: {{$tag->slug}}</h6>
             </div>
         </div>
-        <a href="{{route('admin.categories.index')}}" class="btn btn-primary">Indietro</a>
+        <a href="{{route('admin.tags.index')}}" class="btn btn-primary">Indietro</a>
     </div>
-    <div class="container">
 
-        @if (count($category->post)) 
+    <div class="container">
+        @if (count($tag->posts)) 
             <table class="table table-dark table-striped my-3">
                 <thead>
                     <tr>
@@ -24,7 +24,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                        @foreach ($category->post as $post)
+                        @foreach ($tag->posts as $post)
                             <tr>
                                 <th scope="row">{{$post->id}}</th>
                                 <td>{{$post->name}}</td>
@@ -44,3 +44,4 @@
         @endif
     </div>
 @endsection
+

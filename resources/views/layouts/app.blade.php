@@ -38,7 +38,7 @@
                             <a class="nav-link" href="{{ route('admin.categories.index') }}">Gestione Categorie</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Gestione Tag</a>
+                            <a class="nav-link" href="{{route('admin.tags.index')}}">Gestione Tag</a>
                         </li>
                     </ul>
 

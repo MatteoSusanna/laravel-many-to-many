@@ -15,7 +15,6 @@
                 <th scope="col">Slug</th>
                 <th scope="col">Category</th>
                 <th scope="col">Tag</th>
-                <th scope="col">Data creation</th>
                 <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -28,10 +27,9 @@
                             <td>{{($post->category)?$post->category->name:'-'}}</td>
                             <td>
                                 @foreach ($post->tags as $tag)
-                                    {{$tag->name}} -
+                                    - {{$tag->name}}
                                 @endforeach
                             </td>
-                            <td>{{$post->created_at}}</td>
                             <td class="d-flex">
                                 <a href="{{route('admin.posts.show', ['post' => $post->id])}}" class="btn btn-primary">Vedi</a>
                                 <a href="{{route('admin.posts.edit', ['post' => $post->id])}}" class="btn btn-warning mx-2">Modifica</a>
