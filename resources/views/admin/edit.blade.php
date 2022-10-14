@@ -5,9 +5,26 @@
 
 @section('content')
 <div class="container">
-    <form action="{{route('admin.posts.update', ['post' => $post->id])}}" method="POST">
+    <form action="{{route('admin.posts.update', ['post' => $post->id])}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
+        <div class="card" style="width: 18rem;">
+            @if ($post->cover)
+                <img src="{{asset('storage/' . $post->cover)}}">
+            @else
+                <h6>immagine non è presente</h6>
+            @endif
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Immagine</label>
+            <input type="file" id="image" name="image" class="form-control-file @error('image')is-invalid @enderror">
+
+            @error('image')
+                  <div class="invalid-feedback">{{$message}}</div>
+              @enderror
+        </div>
+
         
         <div class="mb-3">
             <label for="name" class="form-label">Category</label>

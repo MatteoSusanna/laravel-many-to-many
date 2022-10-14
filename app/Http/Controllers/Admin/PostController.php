@@ -115,9 +115,21 @@ class PostController extends Controller
                                 'content' => 'required|min:3|max:65000',
                                 'category_id' => 'nullable|exists:categories,id',
                                 'tags' => 'exists:tags,id',
+                                'image' => 'nullable|image|max:9000',
                             ]
         );
         $dati = $request->all();
+
+        //aggiornamento immagine
+        if(array_key_exists('image', $dati)){
+            
+            if($post->cover){
+                Storage::delete($post->cover);
+            }
+
+            $img_path = Storage::put('cover', $dati['image']);
+            $dati['cover'] = $img_path;
+        }
 
         //creazione slug unique
         $slug = Str::slug($dati['name'] . '-' . $post['id'], '-'); 
@@ -143,6 +155,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        Storage::delete($post->cover);
         $post->tags()->sync([]);
         $post->delete();
         return redirect()->route('admin.posts.index')->with('status', 'Cancellazione avvenuta con succeso');
