@@ -19,6 +19,7 @@
                 <thead>
                     <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Image</th>
                     <th scope="col">Nome</th>
                     <th scope="col">Slug</th>
                     </tr>
@@ -27,6 +28,15 @@
                         @foreach ($category->post as $post)
                             <tr>
                                 <th scope="row">{{$post->id}}</th>
+                                <td>
+                                    <div class="card" style="width: 5rem;">
+                                        @if ($post->cover)
+                                            <img src="{{asset('storage/' . $post->cover)}}">
+                                        @else
+                                            <h6>immagine non è presente</h6>
+                                        @endif
+                                    </div>
+                                </td>
                                 <td>{{$post->name}}</td>
                                 <td>{{$post->slug}}</td>
                             </tr>
