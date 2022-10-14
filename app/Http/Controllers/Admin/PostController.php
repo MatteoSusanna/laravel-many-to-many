@@ -64,9 +64,7 @@ class PostController extends Controller
 
         $posts->save();
         
-        //se dentro $dati esiste la chiave tags allorafai la sync
-        //il browser se tag[] non contiene nulla non lo fa vedere
-        //ecco il perchè di questa condizione
+
         if(array_key_exists('tags', $dati)){
             $posts->tags()->sync($dati['tags']);
         }

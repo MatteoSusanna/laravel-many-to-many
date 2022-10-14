@@ -5,8 +5,18 @@
 
 @section('content')
 <div class="container">
-    <form action="{{route('admin.posts.store')}}" method="POST">
+    <form action="{{route('admin.posts.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
+        <div class="mb-3">
+            <label for="image" class="form-label">Immagine</label>
+            <input type="file" id="image" name="image" class="form-control-file @error('image')is-invalid @enderror">
+
+            @error('image')
+                  <div class="invalid-feedback">{{$message}}</div>
+              @enderror
+        </div>
+
+
         <div class="mb-3">
             <label for="name" class="form-label">Category</label>
 
