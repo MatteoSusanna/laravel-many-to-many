@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Post;
 use App\Tag;
 use Illuminate\Support\Str;
@@ -47,11 +48,15 @@ class PostController extends Controller
                                 'content' => 'required|min:3|max:65000',
                                 'category_id' => 'nullable|exists:categories,id',
                                 'tags' => 'exists:tags,id',
+                                'image' => 'nullable|image|max:9000',
                             ]
         );
 
-
         $dati = $request->all();
+
+        //carica immagine
+        $img_path = Storage::put('cover', $dati['image']);
+        $dati['cover'] = $img_path;
 
         $posts = new Post();
         $posts->fill($dati);
@@ -80,7 +85,6 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        
         return view('admin.show', compact('post'));
     }
 

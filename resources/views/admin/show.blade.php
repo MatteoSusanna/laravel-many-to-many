@@ -4,18 +4,24 @@
 
 @section('content')
     <div class="container">
-        <div class="card text-bg-info mb-3" style="max-width: 18rem;">
-            <div class="card-header">Name: {{$post->name}}</div>
+        <div class="card" style="width: 18rem;">
+            @if ($post->cover)
+                <img src="{{asset('storage/' . $post->cover)}}">
+            @else
+                <h6>immagine non è presente</h6>
+            @endif
+            
             <div class="card-body">
-              <h5 class="card-title">Slug: {{$post->slug}}</h5>
+              <h5 class="card-title">Name: {{$post->name}}</h5>
               <p class="card-text">Content: {{$post->content}}</p>
+              <h5 class="card-title">Slug: {{$post->slug}}</h5>
 
-              <strong>TAG:</strong>
-                @foreach ($post->tags as $tag)
-                    <strong> {{$tag->name}} -</strong>
-                @endforeach
+                <strong>TAG:</strong>
+                    @foreach ($post->tags as $tag)
+                        <strong> {{$tag->name}} -</strong>
+                    @endforeach
             </div>
         </div>
-        <a href="{{route('admin.posts.index')}}" class="btn btn-primary">Indietro</a>
+        <a href="{{route('admin.posts.index')}}" class="btn btn-primary my-3">Indietro</a>
     </div>
 @endsection
